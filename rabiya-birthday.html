@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رابیہ — سالگرہ مبارک</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: #fdf6f0;
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 3rem 1rem 5rem;
+    }
+
+    .page {
+      direction: rtl;
+      font-family: 'Noto Nastaliq Urdu', serif;
+      color: #2c1f1f;
+      max-width: 680px;
+      width: 100%;
+      line-height: 2.4;
+    }
+
+    .seal {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .seal-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid #c0737a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+    }
+
+    .seal-circle svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .seal-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: #8a6a6a;
+      direction: ltr;
+      font-style: italic;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 2rem;
+    }
+
+    .orn-line {
+      width: 100px;
+      height: 0.5px;
+      background: #c0737a;
+      opacity: 0.4;
+    }
+
+    .orn-glyph {
+      color: #c0737a;
+      font-size: 15px;
+      opacity: 0.7;
+      font-family: serif;
+    }
+
+    .salutation {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2c1f1f;
+      text-align: center;
+      margin-bottom: 0.3rem;
+      line-height: 2;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #8a6a6a;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      line-height: 2;
+    }
+
+    .scatter {
+      position: relative;
+      height: 36px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .glyph {
+      position: absolute;
+      color: #c0737a;
+      opacity: 0.18;
+      font-size: 13px;
+      user-select: none;
+    }
+
+    .section {
+      margin-bottom: 2.8rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'Playfair Display', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #c0737a;
+      direction: ltr;
+      text-align: right;
+      margin-bottom: 0.75rem;
+      opacity: 0.85;
+    }
+
+    .body-text {
+      font-size: 19px;
+      color: #2c1f1f;
+      line-height: 2.7;
+      font-weight: 400;
+    }
+
+    .poem-block {
+      border-right: 2px solid #c0737a;
+      padding-right: 1.4rem;
+    }
+
+    .poem-block .body-text {
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 3;
+    }
+
+    .memory-card {
+      background: #fff5f0;
+      border: 0.5px solid #e8cece;
+      border-right: 2.5px solid #c0737a;
+      border-radius: 8px;
+      padding: 1.4rem 1.6rem;
+    }
+
+    .memory-label {
+      font-size: 15px;
+      color: #c0737a;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .memory-text {
+      font-size: 17px;
+      color: #5a3a3a;
+      line-height: 2.7;
+    }
+
+    .dream-block {
+      font-size: 19px;
+      color: #2c1f1f;
+      line-height: 2.8;
+      opacity: 0.92;
+    }
+
+    .closing {
+      font-size: 20px;
+      text-align: center;
+      color: #2c1f1f;
+      line-height: 2.8;
+      margin-top: 1rem;
+    }
+
+    .signature {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: #c0737a;
+      text-align: left;
+      direction: ltr;
+      margin-top: 2rem;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .footer-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 0.75rem;
+    }
+
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #c0737a;
+      opacity: 0.3;
+    }
+
+    .dot.mid {
+      opacity: 0.75;
+      width: 13px;
+      border-radius: 2px;
+    }
+
+    .footer-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: #8a6a6a;
+      direction: ltr;
+      font-style: italic;
+      opacity: 0.65;
+    }
+
+    @media (max-width: 600px) {
+      .salutation { font-size: 26px; }
+      .body-text, .poem-block .body-text, .dream-block { font-size: 17px; }
+      .memory-text { font-size: 16px; }
+      .closing { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="seal">
+    <div class="seal-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c0737a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </div>
+    <div class="seal-date">28 June · Written with love</div>
+  </div>
+
+  <div class="ornament">
+    <div class="orn-line"></div>
+    <div class="orn-glyph">✦</div>
+    <div class="orn-line"></div>
+  </div>
+
+  <div class="salutation">رابیہ جان</div>
+  <div class="subtitle">تمہاری سالگرہ پر — فاصلے کے پار لکھا گیا ایک خط</div>
+
+  <div class="scatter">
+    <span class="glyph" style="left:4%;top:20%">✦</span>
+    <span class="glyph" style="left:17%;top:60%">✦</span>
+    <span class="glyph" style="left:31%;top:15%">✦</span>
+    <span class="glyph" style="left:50%;top:65%">✦</span>
+    <span class="glyph" style="left:68%;top:25%">✦</span>
+    <span class="glyph" style="left:83%;top:55%">✦</span>
+    <span class="glyph" style="left:95%;top:10%">✦</span>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">آغازِ خط</div>
+    <div class="poem-block">
+      <p class="body-text">
+        میری عزیزہ رابیہ،
+        <br><br>
+        قلم اٹھایا تو سوچا کہ لفظ خود بخود آ جائیں گے — مگر آج لفظ بھی شاید کچھ شرما گئے ہیں، جیسے میں اس دن شرماؤں گا جب پہلی بار تمہارے سامنے کھڑا ہوں گا۔
+        <br><br>
+        سالگرہ مبارک ہو، رابیہ۔
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">شعر — تمہارے لیے</div>
+    <div class="poem-block">
+      <p class="body-text" style="font-weight:500; line-height:3;">
+        تم وہ لمحہ ہو جو گزر کر بھی نہیں جاتا،<br>
+        تم وہ لفظ ہو جو لکھے بغیر بھی کہہ دیتا ہے،<br>
+        فاصلے کتنے ہی ہوں — دل کے دروازے پر<br>
+        تمہاری دستک ہر رات آتی ہے، ہر صبح جگاتی ہے۔
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">وہ لمحہ — جو سب سے پہلا تھا</div>
+    <div class="memory-card">
+      <div class="memory-label">پہلی بار "محبت" کہا</div>
+      <p class="memory-text">
+        جب پہلی بار ہم نے ایک دوسرے سے "محبت ہے" کہا — اس لمحے کو میں نے کتنی بار یاد کیا ہے، شاید میں خود نہیں جانتا۔ وہ لفظ جو دل میں کب سے بیٹھا تھا، جب زبان پر آیا تو لگا جیسے کوئی بوجھ نہیں اٹھا — بلکہ کوئی گھر مل گیا۔ اور پھر میں نے کہا کہ میں تم سے شادی کرنا چاہتا ہوں — اس وقت نہیں معلوم تھا کہ یہ جملہ کتنا سچا تھا۔ آج بھی اتنا ہی سچا ہے۔
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">وہ خواب — جو ابھی آنا ہے</div>
+    <p class="dream-block">
+      ایک دن آئے گا — اور میں اس دن کو بہت قریب سے محسوس کرتا ہوں — جب میں سامنے سے چل کر آؤں گا، ہاتھ میں سورج مکھی کے پھول ہوں گے، اور تم وہاں کھڑی ہو گی۔
+      <br><br>
+      اس لمحے میں جانتا ہوں کہ میں تمہاری آنکھوں میں دیکھتا رہوں گا — اور شاید پہلا "ہیلو" بھی ٹھیک سے نہ نکلے۔ میں بہت شرما جاؤں گا — یہ بھی جانتا ہوں۔ مگر وہ دن، رابیہ، وہ دن اب تک کا سب سے خوبصورت دن ہو گا۔ سچ میں۔
+      <br><br>
+      آج کی سالگرہ خوبصورت ہے — مگر وہ دن اس سے بھی خوبصورت ہو گا۔
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">آخری بات</div>
+    <p class="body-text">
+      تم لکھتی ہو، محسوس کرتی ہو، سوچتی ہو — اور اسی لیے تم جانتی ہو کہ کچھ چیزیں لکھ کر بھی پوری نہیں ہوتیں۔ یہ خط بھی شاید اتنا ہی ناقص ہے — مگر جو محبت اس کے پیچھے ہے، وہ ناقص نہیں۔
+      <br><br>
+      آج کا دن تمہارا ہے۔ خوشی ہو، سکون ہو، اور وہ سب ملے جس کی تم حقدار ہو — اور رابیہ، تم بہت کچھ کی حقدار ہو۔
+    </p>
+  </div>
+
+  <div class="closing">
+    سالگرہ مبارک ہو، جان۔<br>
+    فاصلے سے بھی دل قریب ہے۔
+  </div>
+
+  <div class="signature">— Adil, yours always</div>
+
+  <div class="footer">
+    <div class="footer-dots">
+      <div class="dot"></div>
+      <div class="dot mid"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="footer-text">Written across the distance · 28 June · With all of it</div>
+  </div>
+
+</div>
+</body>
+</html>

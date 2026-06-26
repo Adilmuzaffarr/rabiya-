@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>رابیہ — سالگرہ مبارک</title>
+  <title>رابعہ — سالگرہ مبارک</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -11,13 +11,198 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      background: #fdf6f0;
+      background: #f5f0e8;
       min-height: 100vh;
+      font-family: 'Playfair Display', serif;
     }
 
-    body {
+    /* ── ENVELOPE SCREEN ── */
+    #envelope-screen {
+      position: fixed;
+      inset: 0;
+      background: #f5f0e8;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
+      z-index: 100;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #envelope-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .env-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: #c0737a;
+      margin-bottom: 2.5rem;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    /* envelope wrapper */
+    .envelope-wrap {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      cursor: pointer;
+      filter: drop-shadow(0 12px 32px rgba(192,115,122,0.18));
+      transition: transform 0.3s ease;
+    }
+    .envelope-wrap:hover { transform: scale(1.03); }
+
+    /* envelope body */
+    .env-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 190px;
+      background: #fff8f4;
+      border: 1px solid #e8cece;
+      border-radius: 4px 4px 6px 6px;
+      overflow: hidden;
+    }
+
+    /* left and right triangles inside body */
+    .env-body::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      border-style: solid;
+      border-width: 95px 0 95px 160px;
+      border-color: transparent transparent transparent #f5e8e8;
+    }
+    .env-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      border-style: solid;
+      border-width: 95px 160px 95px 0;
+      border-color: transparent #f5e8e8 transparent transparent;
+    }
+
+    /* bottom V flap */
+    .env-bottom {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 0 160px 105px 160px;
+      border-color: transparent transparent #eddada transparent;
+      z-index: 2;
+    }
+
+    /* top flap — this animates open */
+    .env-flap {
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 110px 160px 0 160px;
+      border-color: #e8d0d0 transparent transparent transparent;
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+      z-index: 10;
+    }
+
+    .envelope-wrap.open .env-flap {
+      transform: rotateX(180deg);
+    }
+
+    /* wax seal */
+    .env-seal {
+      position: absolute;
+      top: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 44px;
+      background: #c0737a;
+      border-radius: 50%;
+      z-index: 11;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      box-shadow: 0 2px 8px rgba(192,115,122,0.4);
+    }
+    .env-seal svg { width: 20px; height: 20px; }
+
+    .envelope-wrap.open .env-seal {
+      opacity: 0;
+      transform: translateX(-50%) scale(0.5);
+    }
+
+    /* letter peeking out */
+    .env-letter-peek {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0px);
+      width: 240px;
+      height: 160px;
+      background: #f5f0e8;
+      border: 0.5px solid #e8cece;
+      border-radius: 3px;
+      z-index: 5;
+      transition: transform 0.8s cubic-bezier(0.4,0,0.2,1) 0.5s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .env-letter-peek .peek-text {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: 13px;
+      color: #c0737a;
+      opacity: 0.5;
+      direction: rtl;
+      text-align: center;
+      padding: 1rem;
+      line-height: 2;
+    }
+
+    .envelope-wrap.open .env-letter-peek {
+      transform: translateX(-50%) translateY(-120px);
+    }
+
+    /* click hint */
+    .click-hint {
+      margin-top: 2.2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: #c0737a;
+      font-style: italic;
+      opacity: 0.7;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* ── LETTER PAGE ── */
+    #letter-page {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #letter-page.show {
+      display: block;
+      opacity: 1;
+    }
+
+    body.letter-visible {
       padding: 3rem 1rem 5rem;
     }
 
@@ -27,228 +212,147 @@
       color: #2c1f1f;
       max-width: 680px;
       width: 100%;
-      line-height: 2.4;
+      margin: 0 auto;
     }
 
-    .seal {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
+    .seal { text-align: center; margin-bottom: 2rem; }
     .seal-circle {
-      width: 60px;
-      height: 60px;
+      width: 60px; height: 60px;
       border-radius: 50%;
       border: 1px solid #c0737a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 0.75rem;
     }
-
-    .seal-circle svg {
-      width: 26px;
-      height: 26px;
-    }
-
+    .seal-circle svg { width: 26px; height: 26px; }
     .seal-date {
       font-family: 'Playfair Display', serif;
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      color: #8a6a6a;
-      direction: ltr;
-      font-style: italic;
+      font-size: 12px; letter-spacing: 0.14em;
+      color: #8a6a6a; direction: ltr; font-style: italic;
     }
 
     .ornament {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+      display: flex; align-items: center;
+      justify-content: center; gap: 12px;
       margin: 0 auto 2rem;
     }
-
-    .orn-line {
-      width: 100px;
-      height: 0.5px;
-      background: #c0737a;
-      opacity: 0.4;
-    }
-
-    .orn-glyph {
-      color: #c0737a;
-      font-size: 15px;
-      opacity: 0.7;
-      font-family: serif;
-    }
+    .orn-line { width: 100px; height: 0.5px; background: #c0737a; opacity: 0.4; }
+    .orn-glyph { color: #c0737a; font-size: 15px; opacity: 0.7; }
 
     .salutation {
-      font-size: 32px;
-      font-weight: 700;
-      color: #2c1f1f;
-      text-align: center;
-      margin-bottom: 0.3rem;
-      line-height: 2;
+      font-size: 34px; font-weight: 700;
+      color: #2c1f1f; text-align: center;
+      line-height: 2; margin-bottom: 0.3rem;
     }
-
     .subtitle {
-      font-size: 15px;
-      color: #8a6a6a;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      font-weight: 400;
-      line-height: 2;
+      font-size: 16px; color: #8a6a6a;
+      text-align: center; font-weight: 400;
+      line-height: 2.4; margin-bottom: 2.5rem;
     }
 
-    .scatter {
-      position: relative;
-      height: 36px;
-      margin-bottom: 1.5rem;
-      overflow: hidden;
-    }
+    .scatter { position: relative; height: 36px; margin-bottom: 1.8rem; overflow: hidden; }
+    .glyph { position: absolute; color: #c0737a; opacity: 0.18; font-size: 13px; user-select: none; }
 
-    .glyph {
-      position: absolute;
-      color: #c0737a;
-      opacity: 0.18;
-      font-size: 13px;
-      user-select: none;
-    }
-
-    .section {
-      margin-bottom: 2.8rem;
-    }
-
+    .section { margin-bottom: 2.8rem; }
     .section-eyebrow {
       font-family: 'Playfair Display', serif;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #c0737a;
-      direction: ltr;
-      text-align: right;
-      margin-bottom: 0.75rem;
-      opacity: 0.85;
+      font-size: 10px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: #c0737a;
+      direction: ltr; text-align: right;
+      margin-bottom: 0.75rem; opacity: 0.85;
     }
-
-    .body-text {
-      font-size: 19px;
-      color: #2c1f1f;
-      line-height: 2.7;
-      font-weight: 400;
-    }
-
-    .poem-block {
-      border-right: 2px solid #c0737a;
-      padding-right: 1.4rem;
-    }
-
-    .poem-block .body-text {
-      font-size: 19px;
-      font-weight: 500;
-      line-height: 3;
-    }
+    .body-text { font-size: 19px; color: #2c1f1f; line-height: 3; font-weight: 400; }
 
     .memory-card {
-      background: #fff5f0;
+      background: #ede8dc;
       border: 0.5px solid #e8cece;
       border-right: 2.5px solid #c0737a;
       border-radius: 8px;
       padding: 1.4rem 1.6rem;
     }
+    .memory-label { font-size: 15px; color: #c0737a; font-weight: 600; margin-bottom: 0.6rem; }
+    .memory-text { font-size: 18px; color: #5a3a3a; line-height: 3; }
 
-    .memory-label {
-      font-size: 15px;
-      color: #c0737a;
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-    }
+    .closing { font-size: 21px; text-align: center; color: #2c1f1f; line-height: 3; margin-top: 0.5rem; font-weight: 500; }
 
-    .memory-text {
-      font-size: 17px;
-      color: #5a3a3a;
-      line-height: 2.7;
-    }
-
-    .dream-block {
-      font-size: 19px;
-      color: #2c1f1f;
-      line-height: 2.8;
-      opacity: 0.92;
-    }
-
-    .closing {
-      font-size: 20px;
-      text-align: center;
-      color: #2c1f1f;
-      line-height: 2.8;
-      margin-top: 1rem;
-    }
-
-    .signature {
+    .signature-block { margin-top: 2.5rem; border-top: 0.5px solid #e8cece; padding-top: 1.5rem; }
+    .signature-urdu { font-size: 18px; color: #5a3a3a; line-height: 3; margin-bottom: 1.2rem; }
+    .signature-name {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-style: italic;
-      color: #c0737a;
-      text-align: left;
-      direction: ltr;
-      margin-top: 2rem;
+      font-size: 22px; font-style: italic;
+      color: #c0737a; text-align: left; direction: ltr;
     }
 
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-    }
-
-    .footer-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 0.75rem;
-    }
-
-    .dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #c0737a;
-      opacity: 0.3;
-    }
-
-    .dot.mid {
-      opacity: 0.75;
-      width: 13px;
-      border-radius: 2px;
-    }
-
+    .footer { text-align: center; margin-top: 3rem; }
+    .footer-dots { display: flex; justify-content: center; gap: 6px; margin-bottom: 0.75rem; }
+    .dot { width: 4px; height: 4px; border-radius: 50%; background: #c0737a; opacity: 0.3; }
+    .dot.mid { opacity: 0.75; width: 13px; border-radius: 2px; }
     .footer-text {
       font-family: 'Playfair Display', serif;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      color: #8a6a6a;
-      direction: ltr;
-      font-style: italic;
-      opacity: 0.65;
+      font-size: 11px; letter-spacing: 0.14em;
+      color: #8a6a6a; direction: ltr;
+      font-style: italic; opacity: 0.65;
     }
 
     @media (max-width: 600px) {
-      .salutation { font-size: 26px; }
-      .body-text, .poem-block .body-text, .dream-block { font-size: 17px; }
+      .envelope-wrap { width: 260px; height: 190px; }
+      .env-body { height: 160px; }
+      .env-body::before { border-width: 80px 0 80px 130px; }
+      .env-body::after { border-width: 80px 130px 80px 0; }
+      .env-bottom { border-width: 0 130px 90px 130px; }
+      .env-flap { border-width: 90px 130px 0 130px; }
+      .env-seal { top: 72px; width: 38px; height: 38px; }
+      .env-letter-peek { width: 190px; }
+      .envelope-wrap.open .env-letter-peek { transform: translateX(-50%) translateY(-100px); }
+      .salutation { font-size: 27px; }
+      .body-text { font-size: 17px; }
       .memory-text { font-size: 16px; }
       .closing { font-size: 18px; }
+      .signature-urdu { font-size: 16px; }
     }
   </style>
 </head>
 <body>
+
+<!-- ── ENVELOPE SCREEN ── -->
+<div id="envelope-screen">
+  <div class="env-label">28 June · رابعہ کے لیے</div>
+
+  <div class="envelope-wrap" id="envelope" onclick="openEnvelope()">
+    <div class="env-letter-peek">
+      <div class="peek-text">رابعہ جان<br>سالگرہ مبارک ہو</div>
+    </div>
+    <div class="env-body"></div>
+    <div class="env-bottom"></div>
+    <div class="env-flap"></div>
+    <div class="env-seal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="click-hint">لفافے کو کھولیں</div>
+</div>
+
+<!-- ── LETTER PAGE ── -->
+<div id="letter-page">
 <div class="page">
 
   <div class="seal">
     <div class="seal-circle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#c0737a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c0737a" stroke-width="1.2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                 C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                 c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
       </svg>
     </div>
-    <div class="seal-date">28 June · Written with love</div>
+    <div class="seal-date">28 June · ایک خط، محبت کے ساتھ</div>
   </div>
 
   <div class="ornament">
@@ -257,10 +361,13 @@
     <div class="orn-line"></div>
   </div>
 
-  <div class="salutation">رابیہ جان</div>
-  <div class="subtitle">تمہاری سالگرہ پر — فاصلے کے پار لکھا گیا ایک خط</div>
+  <div class="salutation">پیاری رابعہ</div>
+  <div class="subtitle">
+    دور دراز سے، اس فاصلے کے پار<br>
+    دل سے نکلے الفاظ کا ایک مجموعہ
+  </div>
 
-  <div class="scatter">
+  <div class="scatter" aria-hidden="true">
     <span class="glyph" style="left:4%;top:20%">✦</span>
     <span class="glyph" style="left:17%;top:60%">✦</span>
     <span class="glyph" style="left:31%;top:15%">✦</span>
@@ -271,66 +378,75 @@
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">آغازِ خط</div>
-    <div class="poem-block">
-      <p class="body-text">
-        میری عزیزہ رابیہ،
-        <br><br>
-        قلم اٹھایا تو سوچا کہ لفظ خود بخود آ جائیں گے — مگر آج لفظ بھی شاید کچھ شرما گئے ہیں، جیسے میں اس دن شرماؤں گا جب پہلی بار تمہارے سامنے کھڑا ہوں گا۔
-        <br><br>
-        سالگرہ مبارک ہو، رابیہ۔
-      </p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-eyebrow">شعر — تمہارے لیے</div>
-    <div class="poem-block">
-      <p class="body-text" style="font-weight:500; line-height:3;">
-        تم وہ لمحہ ہو جو گزر کر بھی نہیں جاتا،<br>
-        تم وہ لفظ ہو جو لکھے بغیر بھی کہہ دیتا ہے،<br>
-        فاصلے کتنے ہی ہوں — دل کے دروازے پر<br>
-        تمہاری دستک ہر رات آتی ہے، ہر صبح جگاتی ہے۔
-      </p>
-    </div>
+    <p class="body-text">
+      رابعہ جان،
+      <br><br>
+      سالگرہ مبارک ہو۔
+      <br><br>
+      یہ خط لکھتے وقت سوچ رہا تھا کہ شروع کہاں سے کروں۔ پھر لگا کہ جیسے ہمیشہ تم سے باتیں کرتا ہوں، ویسے ہی لکھ دیتا ہوں، بغیر کسی بناوٹ کے۔ قلم اٹھایا تو لگا جیسے آج لفظ بھی کچھ شرما گئے ہیں، بالکل ویسے جیسے میں اس دن شرماؤں گا جب پہلی بار تمہارے سامنے کھڑا ہوں گا۔
+    </p>
   </div>
 
   <div class="section">
     <div class="section-eyebrow">وہ لمحہ — جو سب سے پہلا تھا</div>
     <div class="memory-card">
-      <div class="memory-label">پہلی بار "محبت" کہا</div>
+      <div class="memory-label">پہلی بار "محبت ہے" کہا</div>
       <p class="memory-text">
-        جب پہلی بار ہم نے ایک دوسرے سے "محبت ہے" کہا — اس لمحے کو میں نے کتنی بار یاد کیا ہے، شاید میں خود نہیں جانتا۔ وہ لفظ جو دل میں کب سے بیٹھا تھا، جب زبان پر آیا تو لگا جیسے کوئی بوجھ نہیں اٹھا — بلکہ کوئی گھر مل گیا۔ اور پھر میں نے کہا کہ میں تم سے شادی کرنا چاہتا ہوں — اس وقت نہیں معلوم تھا کہ یہ جملہ کتنا سچا تھا۔ آج بھی اتنا ہی سچا ہے۔
+        رابعہ، وہ لمحہ یاد ہے جب پہلی بار ہم نے ایک دوسرے سے کہا کہ محبت ہے؟ جب مجھے پہلی بار احساس ہوا کہ میں تم سے محبت کرتا ہوں۔ وہ لفظ جو نہ جانے کب سے دل میں بیٹھا تھا، جب زبان پر آیا تو لگا جیسے کوئی بوجھ نہیں اٹھا بلکہ کوئی گھر مل گیا۔ اور پھر میں نے کہا کہ میں تم سے شادی کرنا چاہتا ہوں۔ اس وقت نہیں معلوم تھا کہ یہ جملہ کتنا سچا تھا۔ آج بھی اتنا ہی سچا ہے، ذرا بھی کم نہیں ہوا۔
       </p>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-eyebrow">وہ خواب — جو ابھی آنا ہے</div>
-    <p class="dream-block">
-      ایک دن آئے گا — اور میں اس دن کو بہت قریب سے محسوس کرتا ہوں — جب میں سامنے سے چل کر آؤں گا، ہاتھ میں سورج مکھی کے پھول ہوں گے، اور تم وہاں کھڑی ہو گی۔
+    <div class="section-eyebrow">وہ دن — جو ابھی آنا ہے</div>
+    <p class="body-text">
+      ایک دن آئے گا اور میں اس دن کو بہت قریب سے محسوس کرتا ہوں، جب میں سامنے سے چل کر آؤں گا، ہاتھ میں سورج مکھی کے پھول ہوں گے، اور تم وہاں کھڑی ہو گی۔
       <br><br>
-      اس لمحے میں جانتا ہوں کہ میں تمہاری آنکھوں میں دیکھتا رہوں گا — اور شاید پہلا "ہیلو" بھی ٹھیک سے نہ نکلے۔ میں بہت شرما جاؤں گا — یہ بھی جانتا ہوں۔ مگر وہ دن، رابیہ، وہ دن اب تک کا سب سے خوبصورت دن ہو گا۔ سچ میں۔
+      اس لمحے میں جانتا ہوں کہ میں تمہاری آنکھوں میں دیکھتا رہوں گا، اور شاید پہلا "ہیلو" بھی ٹھیک سے نہ نکلے۔ میں بہت شرما جاؤں گا، یہ بھی جانتا ہوں۔ مگر وہ دن، رابعہ، وہ دن اب تک کا سب سے خوبصورت دن ہو گا۔ سچ میں۔
       <br><br>
-      آج کی سالگرہ خوبصورت ہے — مگر وہ دن اس سے بھی خوبصورت ہو گا۔
+      آج کی سالگرہ خوبصورت ہے، مگر وہ دن اس سے بھی خوبصورت ہو گا۔
     </p>
   </div>
 
   <div class="section">
     <div class="section-eyebrow">آخری بات</div>
     <p class="body-text">
-      تم لکھتی ہو، محسوس کرتی ہو، سوچتی ہو — اور اسی لیے تم جانتی ہو کہ کچھ چیزیں لکھ کر بھی پوری نہیں ہوتیں۔ یہ خط بھی شاید اتنا ہی ناقص ہے — مگر جو محبت اس کے پیچھے ہے، وہ ناقص نہیں۔
+      تم لکھتی ہو، محسوس کرتی ہو، سوچتی ہو، اور اسی لیے تم جانتی ہو کہ کچھ چیزیں لکھ کر بھی پوری نہیں ہوتیں۔ یہ خط بھی شاید اتنا ہی ناقص ہے، مگر جو محبت اس کے پیچھے ہے، وہ ناقص نہیں۔
       <br><br>
-      آج کا دن تمہارا ہے۔ خوشی ہو، سکون ہو، اور وہ سب ملے جس کی تم حقدار ہو — اور رابیہ، تم بہت کچھ کی حقدار ہو۔
+      مجھے تمہارا لکھا ہوا پڑھنا بہت پسند ہے، سچ میں۔ میں تمہاری لکھائی کا بہت بڑا فین ہوں اور ہمیشہ رہوں گا۔ پلیز میرے لیے کچھ نہ کچھ لکھتی رہا کرو، رکنا مت۔
+      <br><br>
+      آج کا دن تمہارا ہے۔ خوشی ہو، سکون ہو، اور وہ سب ملے جس کی تم حقدار ہو، اور رابعہ، تم بہت کچھ کی حقدار ہو۔
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-eyebrow">ایک خواہش</div>
+    <p class="body-text">
+      رابعہ، اس بار دل میں ایک خواہش ہے۔ سالگرہ پر ایک خوبصورت سا ہلکا جامنی رنگ کا جوڑا تمہیں گفٹ بھیجنا چاہتا ہوں۔ جسے پہن کر تم خوبصورتی سے تیار ہو اور بالوں میں ایک خوبصورت سا فلاور کلچر لگا کر بالوں کو سمیٹ کر باندھ لو۔
+      <br><br>
+      جانتی ہو کیوں جامنی؟ اسلام آباد میں بہار کے موسم میں جب Jacaranda کے درخت کھلتے ہیں، ہر سڑک پر وہ ہلکے جامنی پھول بکھرے ہوتے ہیں۔ میں میٹرو میں بیٹھا انہیں رشک سے دیکھتا ہوں اور سوچتا ہوں کہ یہ میرا پسندیدہ درخت ہے۔ مگر رابعہ، اصل میں میری پسندیدہ تو تم ہو، ہی ہی۔ اس جامنی جوڑے میں تم بالکل ویسی لگو گی جیسے Jacaranda کی وہ ننھی سی پھلی، یا وہ چھوٹا سا ہلکے جامنی رنگ کا پھول جو اس پر کھلتا ہے، جو بھی ہوتا ہے وہ لیکن بہت پیارا ہوتا ہے، تمہارے جیسا۔ ہاں، بالکل ویسے۔
+      <br><br>
+      خیر، یاد سے مجھے اپنے اگلے خط میں اپنا پتہ ضرور بھیج دینا۔ گڑیا، مجھے انتظار رہے گا۔
     </p>
   </div>
 
   <div class="closing">
-    سالگرہ مبارک ہو، جان۔<br>
-    فاصلے سے بھی دل قریب ہے۔
+    ایک بار پھر سے سالگرہ مبارک ہو، رابعہ جان۔<br>
+    فاصلہ ہے تو کیا، دل تو پاس ہے۔
   </div>
 
-  <div class="signature">— Adil, yours always</div>
+  <div class="signature-block">
+    <p class="signature-urdu">
+      چلو اب میں چلتا ہوں، قلم رکھتا ہوں۔ امی جان نے دیکھ لیا تو کہیں گی کہ کیا ہر وقت قلم اور یہ صفحہ لے کر بیٹھے رہتے ہو۔ اور اگر بڑے بھائی یا چھوٹے زوہیر کی نظر پڑ گئی اس خط پر تو مجھے الگ سے ٹیس کریں گے اور ساتھ ہی پورے گھر میں ڈھنڈورا پیٹ دیں گے کہ یہ کلموہا عاشق نہ جانے کس کو خط لکھ رہا ہے۔ اب ان کو کون بتائے، میں نے کسی کو نہیں، اپنے دل کو ہی خط لکھا ہے۔
+      <br><br>
+      اور میں نے "جان" اس لیے نہیں کہا ادھر، کیونکہ آپ کو تو پتہ ہی ہے کہ کوئی کسی کی جان نہیں ہوتا، سب اپنی اپنی جان ہوتے ہیں۔ ہی ہی۔ بائے۔
+      <br><br>
+      میں بھی کیا باتیں کرنے بیٹھ جاتا ہوں، مجھ سے یہ قلم چھین لو، میں لکھتا چلا جاؤں گا ورنہ۔
+      <br><br>
+      اپنا بہت سا خیال رکھنا، کیوٹی۔ اور خط لکھتی رہنا۔ اللہ حافظ۔
+    </p>
+    <div class="signature-name">— Adil, yours always</div>
+  </div>
 
   <div class="footer">
     <div class="footer-dots">
@@ -342,5 +458,30 @@
   </div>
 
 </div>
+</div>
+
+<script>
+  function openEnvelope() {
+    const env = document.getElementById('envelope');
+    const screen = document.getElementById('envelope-screen');
+    const letterPage = document.getElementById('letter-page');
+
+    // Step 1: animate envelope open
+    env.classList.add('open');
+
+    // Step 2: after envelope animates, fade out screen and show letter
+    setTimeout(() => {
+      screen.classList.add('hide');
+      document.body.classList.add('letter-visible');
+
+      letterPage.style.display = 'block';
+      // slight delay so display:block registers before opacity transition
+      setTimeout(() => {
+        letterPage.classList.add('show');
+      }, 50);
+    }, 1400);
+  }
+</script>
+
 </body>
 </html>
